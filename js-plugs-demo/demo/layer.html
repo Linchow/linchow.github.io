@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>layer.js弹窗</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/lib/layer.css">
+    <link rel="stylesheet" href="../css/lib/darcula.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/lib/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+    <div class="js-route-flag js-layer"></div>
+    <div class="box">
+        <div class="container">
+            <h1>layer.js</h1>
+            <p>layer.js是layui中的一个弹窗组件，依赖jQuery，可以弹出信息框、iframe、自定义文本、页面、tips等。功能强大，配置简单。</p>
+            <h2>查看</h2>
+            <p>
+                <a href="../js/lib/layer.js" target="_blank">layer.js</a>&emsp;&emsp;
+                <a href="../css/lib/layer.css" target="_blank">layer.css</a>&emsp;&emsp;
+                <a href="http://layer.layui.com/" target="_blank">API</a>
+            </p>
+            <h2>用法</h2>
+            <p>html</p>
+<pre><code>&ltstyle&gt
+    .btn-layer {
+        border: 1px solid #ddd;
+        cursor: pointer;
+        padding: 0 1em;
+        text-align: center;
+        border-radius: 5px;
+        line-height: 2;
+    }
+    .layer-content {
+        display: none;
+        width: 300px;
+    }
+    .layer-header {
+        height: 45px;
+        line-height: 45px;
+        padding: 0 20px;
+        border-bottom: 1px solid #ddd;
+    }
+    .layer-title {
+        float: left;
+    }
+    .layer-close {
+        float: right;
+        cursor: pointer;
+    }
+    .layer-article {
+        padding: 30px 0;
+        text-align: center;
+    }
+&lt/style&gt
+&ltbutton class="js-openLayer btn-layer"&gt打开弹窗&lt/button&gt
+&ltdiv class="js-content layer-content"&gt
+    &ltdiv class="layer-header"&gt
+        &ltspan class="layer-title"&gt弹窗&lt/span&gt
+        &ltspan class="layer-close js-layer-close"&gt关闭&lt/span&gt
+    &lt/div&gt
+    &ltp class="layer-article"&gtHello World！&lt/p&gt
+&lt/div&gt</code></pre>
+            <p>js</p>
+<pre><code>/**
+ * 打开弹窗
+ * obj: jq Dom
+ */
+function openLayer(obj){
+    if($(obj).hasClass('layui-layer-wrap')){
+        // 判断弹窗是否已经打开
+        return $(obj).parent().parent().attr('times');
+    }
+    return layer.open({
+        type: 1,  // 弹出页面
+        title: false, // 不显示标题栏
+        closeBtn: 0, // 不显示关闭按钮
+        shadeClose: true, // 点击遮罩关闭弹窗
+        fixed: true,  // 定位fixed
+        offset: 'auto', // 垂直水平居中 默认
+        maxWidth: 1200,  // 最大宽度1200 高度自适应时生效
+        resize: false,  // 禁止拉伸
+        content: $(obj), // 内容绑定类名
+    })
+}
+$('.js-openLayer').click(function(){
+    myLayer = openLayer('.js-content');
+})
+$('.js-layer-close').click(function(){
+    layer.close(myLayer);
+})</code></pre>
+            <h2>演示</h2>
+            <blockquote>
+                <style>
+                    .btn-layer {
+                        border: 1px solid #ddd;
+                        cursor: pointer;
+                        padding: 0 1em;
+                        text-align: center;
+                        border-radius: 5px;
+                        line-height: 2;
+                    }
+                    .layer-content {
+                        display: none;
+                        width: 300px;
+                    }
+                    .layer-header {
+                        height: 45px;
+                        line-height: 45px;
+                        padding: 0 20px;
+                        border-bottom: 1px solid #ddd;
+                    }
+                    .layer-title {
+                        float: left;
+                    }
+                    .layer-close {
+                        float: right;
+                        cursor: pointer;
+                    }
+                    .layer-article {
+                        padding: 30px 0;
+                        text-align: center;
+                    }
+                </style>
+                <button class="js-openLayer btn-layer">打开弹窗</button>
+                <div class="js-content layer-content">
+                    <div class="layer-header">
+                        <span class="layer-title">弹窗</span>
+                        <span class="layer-close js-layer-close">关闭</span>
+                    </div>
+                    <p class="layer-article">Hello World！</p>
+                </div>
+            </blockquote>
+        </div>
+    </div>
+    <ul class="side-bar js-side-bar">
+        <li class="js-home"></li>
+        <li class="js-top"></li>
+    </ul>
+    <script src="../js/lib/require.min.js" data-main="../js/main.js"></script>
+</body>
+</html>

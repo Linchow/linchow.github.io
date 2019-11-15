@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>artTemplate的用法</title>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/lib/darcula.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/lib/highlight.pack.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+</head>
+<body>
+    <div class="js-route-flag js-artTemplate"></div>
+    <div class="box">
+        <div class="container">
+            <h1>artTemplate</h1>
+            <p>一个简约、高性能的模板引擎，可运行在Node和浏览器环境。再也不用字符串拼接了~~~</p>
+            <h2>查看</h2>
+            <p><a href="../js/lib/template.js" target="_blank">template.js</a></p>
+            <h2>关于版本</h2>
+            <p>
+                常见的有两个版本<a href="https://github.com/lhywork/artTemplate" target="_blank">artTemplate-3.0</a>和<a href="https://github.com/aui/art-template" target="_blank">art-template</a>,
+                他们的作者都是一个，只是第一个现在不维护了，目前我用的版本是第一个。<br>关于更多版本相关以及api可以看<a href="https://www.jianshu.com/p/b5dffff259be" target="_blank">这篇文章</a>
+            </p>
+            <h2>用法</h2>
+            <p>html</p>
+<pre><code>&ltdiv class="js-template-box"&gt&lt/div&gt
+&ltscript type="text/html" id="module"&gt
+    &ltp&gtHello，大家好！我叫{{name}}，今年{{age}}岁，喜欢{{each like as item i}}{{item}}{{i == like.length - 1 ? '！' : '、'}}{{/each}}&ltbr&gt{{format('yyyy-MM-dd hh:mm:ss')}}&lt/p&gt
+&lt/script&gt</code></pre>
+            <p>./module/1.html</p>
+<pre><code>&ltp&gtHello，大家好！我叫{{name}}，今年{{age}}岁，喜欢{{each like as item i}}{{item}}{{i == like.length - 1 ? '！' : '、'}}{{/each}}&ltbr&gt{{format('yyyy-MM-dd hh:mm:ss')}}&lt/p&gt
+</code></pre>
+            <p>js</p>
+<pre><code>// 数据
+var data = {
+    name: '张三',
+    age: '18',
+    like: ['看书', '写字', '画画']
+}
+// 添加辅助方法
+template.helper('format',function(format){  
+    var date = new Date();
+    var o = {   
+        "M+" : date.getMonth()+1,                 //月份   
+        "d+" : date.getDate(),                    //日   
+        "h+" : date.getHours(),                   //小时   
+        "m+" : date.getMinutes(),                 //分   
+        "s+" : date.getSeconds(),                 //秒   
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+        "S"  : date.getMilliseconds()             //毫秒   
+    };   
+    if(/(y+)/.test(format))   
+        format = format.replace(RegExp.$1,(date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+    for(var k in o)   
+        if(new RegExp("("+ k +")").test(format))   
+    format = format.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+    return format;   
+})
+// 字符串
+var template_str = `&ltp&gtHello，大家好！我叫{{name}}，今年{{age}}岁，喜欢{{each like as item i}}{{item}}{{i == like.length - 1 ? '！' : '、'}}{{/each}}&ltbr&gt{{format('yyyy-MM-dd hh:mm:ss')}}&lt/p&gt`;
+// 外部文件(ajax取值)
+$.get('./module/1.html', function(template){
+    // 3. 以外部文件为模板(因为异步，必须先取到模板，再编译)
+    templateCompile(template,data,'.js-template-box');
+})
+/**
+ * 字符串模板编译函数
+ * templateData: 模板
+ * compileData: 数据
+ * box: 容器(可选)
+ */
+function templateCompile(templateData,compileData,box) {
+    var render = template.compile(templateData);
+    var html = render(compileData);
+    if(box){
+        $(box).html(html);
+    }else{
+        return html;
+    }
+}
+// 1. 以script标签为模板
+$('.js-template-box').html(template('module',data));
+// 2. 以字符串为模板
+templateCompile(template_str,data,'.js-template-box');</code></pre>
+            <h2>演示</h2>
+            <blockquote>
+                <div class="js-template-box"></div>
+                <script type="text/html" id="module">
+                    <p>Hello，大家好！我叫{{name}}，今年{{age}}岁，喜欢{{each like as item i}}{{item}}{{i == like.length - 1 ? '！' : '、'}}{{/each}}<br>{{format('yyyy-MM-dd hh:mm:ss')}}</p>
+                </script>
+            </blockquote>
+        </div>
+    </div>
+    <ul class="side-bar js-side-bar">
+        <li class="js-home"></li>
+        <li class="js-top"></li>
+    </ul>
+    <script src="../js/lib/require.min.js" data-main="../js/main.js"></script>
+</body>
+</html>

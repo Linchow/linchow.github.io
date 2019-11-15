@@ -1,0 +1,79 @@
+html {
+    background: #f5f5f5;
+}
+.box {
+    max-width: 1000px;
+    min-height: 100%;
+    margin: 0 auto;
+    background: #fff;
+}
+.container {
+    padding: 30px;
+    text-align: justify;
+    word-break: break-all;
+    word-wrap: break-word;
+    font-size: 16px;
+    line-height: 1.7;
+}
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+}
+.container code {
+    font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+    border-radius: 5px;
+}
+.container h1 {
+    color: #000;
+    font-size: 26px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-family: PingHei,'Microsoft JhengHei','Microsoft YaHei',STHeiti,SimHei;
+}
+.container h2 {
+    color: #333;
+    font-size: 22px;
+    margin: 10px 0;
+    font-weight: 700;
+    font-family: PingHei,'Microsoft JhengHei','Microsoft YaHei',STHeiti,SimHei;
+}
+.container p {
+    margin: 15px 0;
+    color: #333;
+}
+.container ul {
+    list-style-type: disc;
+    margin-left: 2em;
+    font-size: 16px;
+    line-height: 1.7;
+}
+.container a {
+    color: #08c;
+}
+.container blockquote {
+    border-left: 4px solid #42b983;
+    padding-left: 20px;
+    margin: 15px 0;
+}
+/* 侧边栏 */
+.side-bar {
+    position: fixed;
+    right: -55px;
+    bottom: 40px;
+    width: 50px;
+    transition: right 0.3s ease;
+}
+.side-bar>li {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background: url('../images/top.png') no-repeat center;
+    background-size: 50% 50%;
+    background-color: #fff;
+    margin: 10px 0;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+.side-bar>li:first-child {
+    background-image: url('../images/home.png');
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js动态生成二维码</title>
+    <script src="../js/lib/qrcode.min.js"></script>
+</head>
+<body>
+    <div id="code"></div>
+    <br>
+    <div id="code2"></div>
+    <br>
+    <script>
+        new QRCode(document.getElementById("code"), "http://www.baidu.com");
+        var qrcode = new QRCode("code2", {
+            text: "http://www.baidu.com",
+            width: 256,
+            height: 256,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+        qrcode.clear(); // 清除代码
+        qrcode.makeCode("https://linchow.github.io/js-plugs-demo/"); // 生成另外一个二维码
+    </script>
+</body>
+</html>
